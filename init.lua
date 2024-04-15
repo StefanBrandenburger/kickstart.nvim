@@ -409,6 +409,7 @@ require('lazy').setup({
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'b0o/schemastore.nvim',
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -550,6 +551,31 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
         --
+        -- phpactor = {},
+        intelephense = {},
+
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
+            },
+          },
+        },
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = {
+                -- You must disable built-in schemaStore support if you want to use
+                -- this plugin and its advanced options like `ignore`.
+                enable = false,
+                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                url = '',
+              },
+              schemas = require('schemastore').yaml.schemas(),
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -702,7 +728,8 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          -- Default keymap: '<C-y>'
+          ['<Tab>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -849,6 +876,7 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- { import = 'custom.plugins' },
+  { 'f-person/git-blame.nvim', opts = {} },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -871,6 +899,14 @@ require('lazy').setup({
     -- },
   },
 })
+
+-- region Custom config
+local tabObts = { noremap = true, silent = true }
+vim.keymap.set('n', '<Tab>', '>>', tabObts)
+vim.keymap.set('n', '<S-Tab>', '<<', tabObts)
+vim.keymap.set('v', '<Tab>', '>gv', tabObts)
+vim.keymap.set('v', '<S-Tab>', '<gv', tabObts)
+vim.keymap.set('i', '<S-Tab>', '<C-\\><C-N><<<C-\\><C-N>^i')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
