@@ -921,7 +921,7 @@ vim.keymap.set('i', '<S-Tab>', '<C-\\><C-N><<<C-\\><C-N>^i')
 
 -- region Keymaps for danymat/neogen Plugin
 vim.keymap.set('n', 'g*f', ":lua require('neogen').generate({ type = 'func' })<CR>", { noremap = true, silent = true })
-vim.keymap.set('n', 'g*c', ":lua require('neogen').generate({ type = 'calss' })<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', 'g*c', ":lua require('neogen').generate({ type = 'class' })<CR>", { noremap = true, silent = true })
 vim.keymap.set('n', 'g*v', ":lua require('neogen').generate({ type = 'type' })<CR>", { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
