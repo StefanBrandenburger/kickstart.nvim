@@ -877,6 +877,17 @@ require('lazy').setup({
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- { import = 'custom.plugins' },
   { 'f-person/git-blame.nvim', opts = {} },
+  {
+    'danymat/neogen',
+    config = true,
+    opts = {
+      languages = {
+        php = {
+          annotation_convention = 'phpdoc',
+        },
+      },
+    },
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -907,6 +918,11 @@ vim.keymap.set('n', '<S-Tab>', '<<', tabObts)
 vim.keymap.set('v', '<Tab>', '>gv', tabObts)
 vim.keymap.set('v', '<S-Tab>', '<gv', tabObts)
 vim.keymap.set('i', '<S-Tab>', '<C-\\><C-N><<<C-\\><C-N>^i')
+
+-- region Keymaps for danymat/neogen Plugin
+vim.keymap.set('n', 'g*f', ":lua require('neogen').generate({ type = 'func' })<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', 'g*c', ":lua require('neogen').generate({ type = 'calss' })<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', 'g*v', ":lua require('neogen').generate({ type = 'type' })<CR>", { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
